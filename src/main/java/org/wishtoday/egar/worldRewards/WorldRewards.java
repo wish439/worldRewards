@@ -5,6 +5,7 @@ import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.wishtoday.egar.worldRewards.Command.WRSCommand;
 import org.wishtoday.egar.worldRewards.Events.ChangeWorldEvent;
+import org.wishtoday.egar.worldRewards.Events.PlayerEatEvent;
 
 public final class WorldRewards extends JavaPlugin {
     private static WorldRewards plugin;
@@ -12,6 +13,7 @@ public final class WorldRewards extends JavaPlugin {
     public void onEnable() {
         plugin = this;
         this.getServer().getPluginManager().registerEvents(new ChangeWorldEvent(), this);
+        this.getServer().getPluginManager().registerEvents(new PlayerEatEvent(), this);
         saveDefaultConfig();
         registerCommands();
     }
