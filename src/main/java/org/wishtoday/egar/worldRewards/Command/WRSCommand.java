@@ -7,6 +7,8 @@ import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import io.papermc.paper.command.brigadier.argument.ArgumentTypes;
 import io.papermc.paper.command.brigadier.argument.resolvers.selector.PlayerSelectorArgumentResolver;
+import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -23,6 +25,7 @@ public class WRSCommand {
     public static void registerCommand(Commands command) {
         command.register(
                 literal("wrs")
+                        .requires(sourceStack -> sourceStack.getSender().isOp())
                         .then(
                                 literal("query")
                                         .then(argument(
