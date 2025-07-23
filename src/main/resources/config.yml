@@ -2,7 +2,7 @@ overload:
   seconds: 100
   item:
     material: "grass_block"
-    count: 10
+    count: 1
     display_name: "overload"
   item2:
     material: "grass_block"
