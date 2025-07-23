@@ -33,10 +33,6 @@ public class ChangeWorldEvent implements Listener {
         World.Environment environment = toWorld.getEnvironment();
         int tick = player.getStatistic(Statistic.PLAY_ONE_MINUTE);
         int second = tick / 20;
-        System.out.println(environment);
-        System.out.println(second);
-        System.out.println(Config.getSeconds(Config.World.OVERLOAD));
-        System.out.println(Config.getSeconds(Config.World.OVERLOAD) > second);
         if (environment == World.Environment.NORMAL
                 && Config.getSeconds(Config.World.OVERLOAD) > second) return;
         if (environment == World.Environment.THE_END

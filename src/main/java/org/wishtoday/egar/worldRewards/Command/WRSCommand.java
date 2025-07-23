@@ -64,7 +64,7 @@ public class WRSCommand {
                                 literal("reload")
                                         .executes(context -> {
                                             int i = Config.reload();
-                                            context.getSource().getSender().sendMessage("Reloaded");
+                                            context.getSource().getSender().sendMessage("Reloading");
                                             return i;
                                         })
                         ).build()

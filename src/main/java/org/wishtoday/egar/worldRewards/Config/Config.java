@@ -27,6 +27,7 @@ public class Config {
                     .warning("config load fail:" + e.getMessage());
             return -1;
         }
+        WorldRewards.getInstance().getLogger().info("config reloaded");
         return 1;
     }
     public static List<ItemStack> getItems(World world) {
