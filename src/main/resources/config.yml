@@ -1,4 +1,6 @@
+weaken_enchanted_golden_apple: true
 overload:
+  #领取奖励所需的在线秒数 ***
   seconds: 100
   item:
     material: "grass_block"
@@ -9,6 +11,7 @@ overload:
     count: 2
     display_name: "overload2"
 nether:
+  #领取奖励所需的在线秒数 ***
   seconds: 43200
   item:
     material: "netherrack"
@@ -19,6 +22,7 @@ nether:
     count: 2
     display_name: "nether2"
 end:
+  #领取奖励所需的在线秒数 ***
   seconds: 86400
   item:
     material: "end_stone"

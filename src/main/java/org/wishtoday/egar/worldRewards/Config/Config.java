@@ -58,6 +58,9 @@ public class Config {
     public static int getSeconds(World world) {
         return WorldRewards.getInstance().getConfig().getInt(world.getName() + ".seconds");
     }
+    public static boolean isWeakenGoldenApple() {
+        return WorldRewards.getInstance().getConfig().getBoolean("weaken_enchanted_golden_apple");
+    }
     public enum World {
         OVERLOAD("overload", ChangeWorldEvent.OVERLOAD
                 , org.bukkit.World.Environment.NORMAL),

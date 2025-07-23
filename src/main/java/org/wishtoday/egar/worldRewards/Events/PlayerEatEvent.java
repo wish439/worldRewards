@@ -11,6 +11,7 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.wishtoday.egar.worldRewards.Config.Config;
 
 import java.util.Arrays;
 import java.util.List;
@@ -35,6 +36,7 @@ public class PlayerEatEvent implements Listener {
 
     @EventHandler
     public void onPlayerEat(PlayerItemConsumeEvent event) {
+        if (!Config.isWeakenGoldenApple()) return;
         ItemStack item = event.getItem();
         if (item.getType() != Material.ENCHANTED_GOLDEN_APPLE) return;
         event.setCancelled(true);
