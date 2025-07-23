@@ -1,0 +1,30 @@
+overload:
+  seconds: 100
+  item:
+    material: "grass_block"
+    count: 10
+    display_name: "overload"
+  item2:
+    material: "grass_block"
+    count: 2
+    display_name: "overload2"
+nether:
+  seconds: 43200
+  item:
+    material: "netherrack"
+    count: 1
+    display_name: "nether1"
+  item2:
+    material: "netherrack"
+    count: 2
+    display_name: "nether2"
+end:
+  seconds: 86400
+  item:
+    material: "end_stone"
+    count: 1
+    display_name: "end1"
+  item2:
+    material: "end_stone"
+    count: 2
+    display_name: "end2"
