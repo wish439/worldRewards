@@ -24,7 +24,7 @@ public class CancelCommandEvent implements Listener {
     public static final Map<String, Integer> cancelCommands = Map.of(
             "kill",1
             ,"kick",2
-            ,"damage",3
+            ,"damage",4
     );
     @EventHandler
     public void onCommandSend(PlayerCommandPreprocessEvent event) {
