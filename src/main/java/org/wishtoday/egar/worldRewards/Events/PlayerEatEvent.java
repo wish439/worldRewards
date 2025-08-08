@@ -23,14 +23,14 @@ public class PlayerEatEvent implements Listener {
             PotionEffectType.FIRE_RESISTANCE,
             PotionEffectType.RESISTANCE
     );
-    //statusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 400, 1), 1.0F)
-    //statusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, 6000, 0), 1.0F)
-    //statusEffect(new StatusEffectInstance(StatusEffects.FIRE_RESISTANCE, 6000, 0), 1.0F)
-    //statusEffect(new StatusEffectInstance(StatusEffects.ABSORPTION, 2400, 3), 1.0F)
     List<PotionEffect> effects = Arrays.asList(
+            //生命恢复1级5秒
             new PotionEffect(PotionEffectType.REGENERATION,100,0),
+            //抗性1级75秒
             new PotionEffect(PotionEffectType.RESISTANCE, 1500, 0),
+            //火焰抗性1级75秒
             new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 1500, 0),
+            //伤害吸收3级60秒
             new PotionEffect(PotionEffectType.ABSORPTION, 1200, 2)
     );
 
