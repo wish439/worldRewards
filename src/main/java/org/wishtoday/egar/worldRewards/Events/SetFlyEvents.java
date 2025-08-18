@@ -22,7 +22,11 @@ public class SetFlyEvents implements Listener {
     }
     private void testAndSetFly(Player player) {
         Boolean b = player.getPersistentDataContainer().get(FlyCommand.CAN_FLY, PersistentDataType.BOOLEAN);
-        if (b == null || !b) return;
+        if (b == null || !b) {
+            player.setAllowFlight(false);
+            player.getPersistentDataContainer().set(FlyCommand.CAN_FLY, PersistentDataType.BOOLEAN, false);
+            return;
+        }
         player.setAllowFlight(true);
         //player.setFlying(false);
     }

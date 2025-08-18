@@ -29,7 +29,6 @@ public class CancelCommandEvent implements Listener {
     @EventHandler
     public void onCommandSend(PlayerCommandPreprocessEvent event) {
         String message = event.getMessage();
-        System.out.println(message);
         String s = message.substring(1);
         String[] split = s.split(" ");
         if (!isCanCancelCommand(split[0])) return;
@@ -41,7 +40,6 @@ public class CancelCommandEvent implements Listener {
     @EventHandler
     public void onServerCommand(ServerCommandEvent event) {
         String s = event.getCommand();
-        System.out.println(s);
         String[] split = s.split(" ");
         if (!isCanCancelCommand(split[0])) return;
         String s1;

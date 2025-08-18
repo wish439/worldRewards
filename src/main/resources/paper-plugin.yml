@@ -1,4 +1,4 @@
 name: worldRewards
-version: '1.0'
+version: '2.0'
 main: org.wishtoday.egar.worldRewards.WorldRewards
 api-version: '1.21'
