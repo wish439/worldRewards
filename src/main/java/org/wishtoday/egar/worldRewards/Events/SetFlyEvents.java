@@ -1,5 +1,6 @@
 package org.wishtoday.egar.worldRewards.Events;
 
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -18,6 +19,12 @@ public class SetFlyEvents implements Listener {
     }
     @EventHandler
     public void onPlayerRespawn(PlayerRespawnEvent event) {
+        testAndSetFly(event);
+    }
+    @EventHandler
+    public void onPlayerChangeMode(PlayerGameModeChangeEvent event) {
+        GameMode mode = event.getNewGameMode();
+        if (mode == GameMode.SPECTATOR || mode == GameMode.CREATIVE) return;
         testAndSetFly(event);
     }
     private void testAndSetFly(Player player) {
