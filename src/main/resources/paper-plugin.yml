@@ -2,3 +2,7 @@ name: worldRewards
 version: '2.0'
 main: org.wishtoday.egar.worldRewards.WorldRewards
 api-version: '1.21'
+permissions:
+  worldrewards.fly:
+    description: 允许使用 /fly
+    default: op

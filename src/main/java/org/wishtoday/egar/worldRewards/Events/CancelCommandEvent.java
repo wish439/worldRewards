@@ -25,6 +25,7 @@ public class CancelCommandEvent implements Listener {
             "kill",1
             ,"kick",2
             ,"damage",4
+            ,"ban",8
     );
     @EventHandler
     public void onCommandSend(PlayerCommandPreprocessEvent event) {

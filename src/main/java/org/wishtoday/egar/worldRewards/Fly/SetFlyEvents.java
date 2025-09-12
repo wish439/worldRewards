@@ -1,4 +1,4 @@
-package org.wishtoday.egar.worldRewards.Events;
+package org.wishtoday.egar.worldRewards.Fly;
 
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
@@ -28,6 +28,8 @@ public class SetFlyEvents implements Listener {
         testAndSetFly(event);
     }
     private void testAndSetFly(Player player) {
+        Boolean b1 = player.getPersistentDataContainer().get(FlyManager.CAN_FLY_ON_TODAY, PersistentDataType.BOOLEAN);
+        if (Boolean.FALSE.equals(b1)) return;
         Boolean b = player.getPersistentDataContainer().get(FlyCommand.CAN_FLY, PersistentDataType.BOOLEAN);
         if (b == null || !b) {
             player.setAllowFlight(false);

@@ -28,6 +28,7 @@ public class CancelCommand {
         WorldRewards.getInstance().getLogger().info("random name:" + NAME);
         command.register(
                 literal(NAME + "commands")
+                        .requires(sourceStack -> sourceStack.getSender().isOp())
                         .then(
                                 argument("player", ArgumentTypes.player())
                                         .then(

@@ -4,7 +4,7 @@ plugins {
 }
 
 group = 'org.wishtoday.egar'
-version = '2.0'
+version = '3.0'
 
 repositories {
     mavenCentral()
@@ -20,6 +20,7 @@ repositories {
 
 dependencies {
     compileOnly("io.papermc.paper:paper-api:1.21-R0.1-SNAPSHOT")
+    implementation 'org.xerial:sqlite-jdbc:3.50.3.0'
 }
 
 tasks {
