@@ -15,6 +15,7 @@ import org.wishtoday.egar.worldRewards.Config.Config;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 public class PlayerEatEvent implements Listener {
     List<PotionEffectType> effectTypes = Arrays.asList(
@@ -23,26 +24,34 @@ public class PlayerEatEvent implements Listener {
             PotionEffectType.FIRE_RESISTANCE,
             PotionEffectType.RESISTANCE
     );
-    List<PotionEffect> effects = Arrays.asList(
-            //生命恢复1级5秒
-            new PotionEffect(PotionEffectType.REGENERATION,100,0),
-            //抗性1级75秒
-            new PotionEffect(PotionEffectType.RESISTANCE, 1500, 0),
-            //火焰抗性1级75秒
-            new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 1500, 0),
-            //伤害吸收3级60秒
-            new PotionEffect(PotionEffectType.ABSORPTION, 1200, 2)
+    Map<Integer, List<PotionEffect>> map = Map.of(
+            -1,Arrays.asList(
+                    //生命恢复1级5秒
+                    new PotionEffect(PotionEffectType.REGENERATION,100,0),
+                    //抗性1级75秒
+                    new PotionEffect(PotionEffectType.RESISTANCE, 1500, 0),
+                    //火焰抗性1级75秒
+                    new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 1500, 0),
+                    //伤害吸收3级60秒
+                    new PotionEffect(PotionEffectType.ABSORPTION, 1200, 2)
+            ),
+            1,Arrays.asList(
+                    new PotionEffect(PotionEffectType.REGENERATION,600,4),
+                    new PotionEffect(PotionEffectType.RESISTANCE, 6000, 0),
+                    new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 6000, 0),
+                    new PotionEffect(PotionEffectType.ABSORPTION, 6000, 2)
+            )
     );
 
     @EventHandler
     public void onPlayerEat(PlayerItemConsumeEvent event) {
-        if (!Config.isWeakenGoldenApple()) return;
+        if (Config.getGoldenAppleStrength() == 0) return;
         ItemStack item = event.getItem();
         if (item.getType() != Material.ENCHANTED_GOLDEN_APPLE) return;
         event.setCancelled(true);
         Player player = event.getPlayer();
         effectTypes.forEach(player::removePotionEffect);
-        player.addPotionEffects(effects);
+        player.addPotionEffects(map.get(Config.getGoldenAppleStrength()));
         player.setSaturation(player.getSaturation() + 2);
         player.setFoodLevel(player.getFoodLevel() + 9);
         if (player.getGameMode() == GameMode.CREATIVE) return;

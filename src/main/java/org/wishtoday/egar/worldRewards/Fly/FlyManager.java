@@ -109,6 +109,7 @@ public class FlyManager implements Listener {
         return counters.get(uuid);
     }
     public void putCounter(UUID uuid, Counter counter) {
+        if (counters.containsKey(uuid)) return;
         counters.put(uuid, counter);
     }
 }

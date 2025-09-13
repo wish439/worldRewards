@@ -1,5 +1,5 @@
 #是否削弱附魔金苹果
-weaken_enchanted_golden_apple: true
+weaken_enchanted_golden_apple: 0
 overload:
   #领取奖励所需的在线秒数 ***
   seconds: 100
