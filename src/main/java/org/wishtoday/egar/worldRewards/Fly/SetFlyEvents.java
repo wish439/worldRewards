@@ -1,8 +1,10 @@
 package org.wishtoday.egar.worldRewards.Fly;
 
+import cn.lunadeer.dominion.events.PlayerCrossDominionBorderEvent;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.*;
 import org.bukkit.persistence.PersistentDataType;
@@ -26,6 +28,10 @@ public class SetFlyEvents implements Listener {
         GameMode mode = event.getNewGameMode();
         if (mode == GameMode.SPECTATOR || mode == GameMode.CREATIVE) return;
         testAndSetFly(event);
+    }
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onPlayerQuit(PlayerCrossDominionBorderEvent event) {
+        testAndSetFly(event.getPlayer());
     }
     private void testAndSetFly(Player player) {
         Boolean b1 = player.getPersistentDataContainer().get(FlyManager.CAN_FLY_ON_TODAY, PersistentDataType.BOOLEAN);

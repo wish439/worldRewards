@@ -1,7 +1,9 @@
 package org.wishtoday.egar.worldRewards;
 
+import cn.lunadeer.dominion.api.DominionAPI;
 import io.papermc.paper.command.brigadier.Commands;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.wishtoday.egar.worldRewards.Command.CancelCommand;
@@ -18,30 +20,44 @@ import org.wishtoday.egar.worldRewards.Fly.SetFlyEvents;
 
 public final class WorldRewards extends JavaPlugin {
     private static WorldRewards plugin;
+    private static DominionAPI dominionAPI;
+
     @Override
     public void onEnable() {
         plugin = this;
         PluginManager manager = this.getServer().getPluginManager();
         manager.registerEvents(new ChangeWorldEvent(), this);
         manager.registerEvents(new PlayerEatEvent(), this);
-        manager.registerEvents(new SetFlyEvents(),this);
+        manager.registerEvents(new SetFlyEvents(), this);
         manager.registerEvents(new CancelCommandEvent(), this);
         manager.registerEvents(new FlyManager(), this);
         manager.registerEvents(new PlayerEvent(), this);
         saveDefaultConfig();
         registerCommands();
+        if (Bukkit.getPluginManager().isPluginEnabled("Dominion")) {
+            dominionAPI = DominionAPI.getInstance();
+            this.getLogger().info("Got Dominion instance");
+        } else {
+            this.getLogger().warning("Dominion plugin is not enabled. Please ensure it is installed and enabled.");
+        }
         FlyManager.getInstance().start();
         DataSave.getInstance().load();
         DataSave.getInstance().loadList();
+    }
+
+    public static DominionAPI getDominionAPI() {
+        return dominionAPI;
     }
 
     @Override
     public void onDisable() {
         super.onDisable();
     }
+
     public static WorldRewards getInstance() {
         return plugin;
     }
+
     private void registerCommands() {
         this.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS, event -> {
             Commands registrar = event.registrar();
