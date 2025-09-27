@@ -1,14 +1,15 @@
 package org.wishtoday.egar.worldRewards.Fly;
 
-import cn.lunadeer.dominion.events.PlayerCrossDominionBorderEvent;
+
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.*;
 import org.bukkit.persistence.PersistentDataType;
+import org.jetbrains.annotations.NotNull;
 import org.wishtoday.egar.worldRewards.Command.FlyCommand;
+import org.wishtoday.egar.worldRewards.WorldRewards;
 
 public class SetFlyEvents implements Listener {
     @EventHandler
@@ -29,11 +30,15 @@ public class SetFlyEvents implements Listener {
         if (mode == GameMode.SPECTATOR || mode == GameMode.CREATIVE) return;
         testAndSetFly(event);
     }
-    @EventHandler(priority = EventPriority.LOWEST)
-    public void onPlayerQuit(PlayerCrossDominionBorderEvent event) {
-        testAndSetFly(event.getPlayer());
+    @EventHandler
+    public void resetFlyTime(PlayerJoinEvent event) {
+        Player player = event.getPlayer();
+        if (!FlyManager.getInstance().getNeedReset().contains(player.getUniqueId())) return;
+        FlyManager.getInstance().resetFlyStateToPlayer(player);
+        FlyManager.getInstance().getNeedReset().remove(player.getUniqueId());
+        WorldRewards.getInstance().getLogger().info(player.getUniqueId() + "{}Fly reset");
     }
-    private void testAndSetFly(Player player) {
+    private void testAndSetFly(@NotNull Player player) {
         Boolean b1 = player.getPersistentDataContainer().get(FlyManager.CAN_FLY_ON_TODAY, PersistentDataType.BOOLEAN);
         if (Boolean.FALSE.equals(b1)) return;
         Boolean b = player.getPersistentDataContainer().get(FlyCommand.CAN_FLY, PersistentDataType.BOOLEAN);

@@ -43,7 +43,7 @@ public class DataSave {
     }
 
     public void saveList() {
-        List<UUID> needReset = FlyManager.getInstance().getNeedReset();
+        Set<UUID> needReset = FlyManager.getInstance().getNeedReset();
         String sql = """
                 INSERT INTO flys (id, v)
                 VALUES (?, ?)
@@ -78,7 +78,7 @@ public class DataSave {
     }
 
     public void loadList() {
-        List<UUID> needReset = new ArrayList<>();
+        Set<UUID> needReset = new HashSet<>();
         String sql = "SELECT v FROM flys WHERE id = 'need_reset'";
         try (PreparedStatement prepareStatement = con.prepareStatement(sql)) {
             ResultSet set = prepareStatement.executeQuery();
