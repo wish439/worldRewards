@@ -18,8 +18,7 @@ import java.util.*;
 
 public class Config {
     public static int reload() {
-        File file = new File(WorldRewards.getInstance().getDataFolder()
-                , "config.yml");
+        File file = new File(WorldRewards.getInstance().getDataFolder(), "config.yml");
         try {
             WorldRewards.getInstance().getConfig().load(file);
         } catch (IOException | InvalidConfigurationException e) {
@@ -43,7 +42,6 @@ public class Config {
             String path = name + "." + s + ".";
             Material material = Material.getMaterial(config.getString(path + "material").toUpperCase());
             if (material == null) continue;
-            System.out.println(material);
             int count = config.getInt(path + "count");
             Component disname = config.getString(path + "display_name") == null ? null : Component.text(config.getString(path + "display_name"));
             ItemStack stack = new ItemStack(material, count);
@@ -55,6 +53,20 @@ public class Config {
             items.add(stack);
         }
         return items;
+    }
+    private static List<String> getCancelCommand() {
+        FileConfiguration config = WorldRewards.getInstance().getConfig();
+        return config.getStringList("cancel_command");
+    }
+    public static Map<String, String> getCancels() {
+        List<String> cancelCommand = getCancelCommand();
+        Map<String, String> cancels = new HashMap<>();
+        for (String s : cancelCommand) {
+            String[] split = s.split(" ");
+            if (split.length <= 1) continue;
+            cancels.put(split[0], s);
+        }
+        return cancels;
     }
     public static int getSeconds(World world) {
         return WorldRewards.getInstance().getConfig().getInt(world.getName() + ".seconds");

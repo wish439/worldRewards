@@ -1,5 +1,14 @@
 #是否削弱附魔金苹果
 weaken_enchanted_golden_apple: 0
+#需要取消的指令 {player}为玩家名字
+cancel_command:
+  - kill {player}
+  - kick {player}
+  - damage {player}
+  - minecraft:kill {player}
+  - cmi kill {player}
+#  - cmi:kill {player}
+
 overload:
   #领取奖励所需的在线秒数 ***
   seconds: 100

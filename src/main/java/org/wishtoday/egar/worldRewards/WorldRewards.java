@@ -2,19 +2,19 @@ package org.wishtoday.egar.worldRewards;
 
 import io.papermc.paper.command.brigadier.Commands;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.wishtoday.egar.worldRewards.Command.CancelCommand;
 import org.wishtoday.egar.worldRewards.Command.FlyCommand;
 import org.wishtoday.egar.worldRewards.Command.WRSCommand;
 import org.wishtoday.egar.worldRewards.Config.DataSave;
-import org.wishtoday.egar.worldRewards.Events.CancelCommandEvent;
-import org.wishtoday.egar.worldRewards.Events.ChangeWorldEvent;
-import org.wishtoday.egar.worldRewards.Events.PlayerEatEvent;
-import org.wishtoday.egar.worldRewards.Events.PlayerEvent;
+import org.wishtoday.egar.worldRewards.Events.*;
 import org.wishtoday.egar.worldRewards.Fly.FlyManager;
 import org.wishtoday.egar.worldRewards.Fly.FlyManagerCommand;
 import org.wishtoday.egar.worldRewards.Fly.SetFlyEvents;
+
+import java.util.UUID;
 
 public final class WorldRewards extends JavaPlugin {
     private static WorldRewards plugin;
@@ -28,11 +28,17 @@ public final class WorldRewards extends JavaPlugin {
         manager.registerEvents(new SetFlyEvents(), this);
         manager.registerEvents(new CancelCommandEvent(), this);
         manager.registerEvents(new PlayerEvent(), this);
+        manager.registerEvents(new CustomCommandEvent(), this);
         saveDefaultConfig();
         registerCommands();
         FlyManager.getInstance().start();
         DataSave.getInstance().load();
         DataSave.getInstance().loadList();
+        this.getServer().getScheduler().runTaskTimer(
+                this
+                , () -> CustomCommandEvent.name = UUID.randomUUID().toString()
+                , 6000L, 6000L
+        );
     }
 
     @Override

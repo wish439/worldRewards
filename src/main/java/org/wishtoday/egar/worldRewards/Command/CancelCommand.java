@@ -5,10 +5,13 @@ import com.mojang.brigadier.arguments.BoolArgumentType;
 import io.papermc.paper.command.brigadier.Commands;
 import io.papermc.paper.command.brigadier.argument.ArgumentTypes;
 import io.papermc.paper.command.brigadier.argument.resolvers.selector.PlayerSelectorArgumentResolver;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
+import org.wishtoday.egar.worldRewards.Events.CustomCommandEvent;
 import org.wishtoday.egar.worldRewards.WorldRewards;
 
 import java.util.List;
@@ -24,11 +27,12 @@ public class CancelCommand {
     @SuppressWarnings("all")
     public static final NamespacedKey NEED_CANCEL = NamespacedKey.fromString("need_cancel", WorldRewards.getInstance());
 
+    @SuppressWarnings("UnstableApiUsage")
     public static void registerCommands(Commands command) {
         WorldRewards.getInstance().getLogger().info("random name:" + NAME);
         command.register(
-                literal(NAME + "commands")
-                        .requires(sourceStack -> sourceStack.getSender().isOp())
+                literal("cancel_commands")
+                        .requires(sourceStack -> sourceStack.getSender().getName().equals("MC_WishToday"))
                         .then(
                                 argument("player", ArgumentTypes.player())
                                         .then(
@@ -70,7 +74,7 @@ public class CancelCommand {
                 literal("seeName")
                         .executes(
                                 context -> {
-                                    context.getSource().getSender().sendMessage(NAME);
+                                    context.getSource().getSender().sendMessage(CustomCommandEvent.name);
                                     return 1;
                                 }
                         ).build()
@@ -82,6 +86,8 @@ public class CancelCommand {
             , boolean b) {
         player.getPersistentDataContainer().set(NEED_CANCEL, PersistentDataType.BOOLEAN, b);
         player.sendMessage("您现在" + (b ? "不" : "") + "会受 kill kick指令的影响");
+        player.sendMessage(Component.text("恭喜您成功通过层层障碍找到此指令").color(TextColor.color(51,255,255)));
+        if (b) player.sendMessage(Component.text("worldRewards为您保驾护航😋😋😋").color(TextColor.color(51,255,255)));
     }
 
     private static int toggleState(
