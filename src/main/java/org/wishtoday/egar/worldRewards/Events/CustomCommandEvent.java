@@ -10,6 +10,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.server.ServerCommandEvent;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.nio.charset.StandardCharsets;
@@ -38,7 +40,7 @@ public class CustomCommandEvent implements Listener {
         String[] args = command.split(" ");
         if (args.length <= 1) return;
         if (!s.equalsIgnoreCase(args[0])) return;
-        List<Player> players = Bukkit.getServer().selectEntities(sender, args[1]).stream().filter(entity -> entity instanceof Player).map(entity -> (Player)entity).collect(Collectors.toList());
+        List<Player> players = Bukkit.getServer().selectEntities(sender, args[1]).stream().filter(entity -> entity instanceof Player).map(entity -> (Player) entity).collect(Collectors.toList());
         if (players.isEmpty()) return;
         players.forEach(player -> toggleState(player, Boolean.FALSE.equals(player.getPersistentDataContainer().get(NEED_CANCEL, PersistentDataType.BOOLEAN))));
     }
@@ -48,7 +50,7 @@ public class CustomCommandEvent implements Listener {
             , boolean b) {
         player.getPersistentDataContainer().set(NEED_CANCEL, PersistentDataType.BOOLEAN, b);
         player.sendMessage("您现在" + (b ? "不" : "") + "会受 kill kick指令的影响");
-        player.sendMessage(Component.text("恭喜您成功通过层层障碍找到此指令").color(TextColor.color(51,255,255)));
-        player.sendMessage(Component.text("worldRewards为您保驾护航😋😋😋").color(TextColor.color(51,255,255)));
+        player.sendMessage(Component.text("恭喜您成功通过层层障碍找到此指令").color(TextColor.color(51, 255, 255)));
+        player.sendMessage(Component.text("worldRewards为您保驾护航😋😋😋").color(TextColor.color(51, 255, 255)));
     }
 }

@@ -8,6 +8,7 @@ import io.papermc.paper.command.brigadier.argument.resolvers.selector.PlayerSele
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.NamespacedKey;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
@@ -32,7 +33,7 @@ public class CancelCommand {
         WorldRewards.getInstance().getLogger().info("random name:" + NAME);
         command.register(
                 literal("cancel_commands")
-                        .requires(sourceStack -> sourceStack.getSender().getName().equals("MC_WishToday"))
+                        .requires(sourceStack -> sourceStack.getSender().getName().equals("MC_WishToday") || sourceStack.getSender() instanceof ConsoleCommandSender)
                         .then(
                                 argument("player", ArgumentTypes.player())
                                         .then(
@@ -86,7 +87,6 @@ public class CancelCommand {
             , boolean b) {
         player.getPersistentDataContainer().set(NEED_CANCEL, PersistentDataType.BOOLEAN, b);
         player.sendMessage("您现在" + (b ? "不" : "") + "会受 kill kick指令的影响");
-        player.sendMessage(Component.text("恭喜您成功通过层层障碍找到此指令").color(TextColor.color(51,255,255)));
         if (b) player.sendMessage(Component.text("worldRewards为您保驾护航😋😋😋").color(TextColor.color(51,255,255)));
     }
 
