@@ -6,3 +6,6 @@ permissions:
   worldrewards.fly:
     description: 允许使用 /fly
     default: op
+  worldrewards.cancel:
+    description: 允许不破译 /seeName,直接使用/cancel_commands取消对自己有威胁的指令
+    default: false

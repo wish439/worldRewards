@@ -2,7 +2,6 @@ package org.wishtoday.egar.worldRewards.Events;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
-import net.kyori.adventure.util.RGBLike;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
@@ -16,10 +15,7 @@ import org.bukkit.persistence.PersistentDataType;
 import org.wishtoday.egar.worldRewards.Command.CancelCommand;
 import org.wishtoday.egar.worldRewards.Config.Config;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 public class CancelCommandEvent implements Listener {
     /*public static final Set<String> cancelCommands = Sets
@@ -38,7 +34,8 @@ public class CancelCommandEvent implements Listener {
         String message = event.getMessage();
         String s = message.substring(1);
         String[] split = s.split(" ");
-        int i = indexOfPlayerOnCommand(split[0]);
+        String string = getStringBeforePlayer(s);
+        int i = indexOfPlayerOnCommand(string);
         if (i == -1) return;
         String s1;
         if (split.length <= i) s1 = event.getPlayer().getName();
@@ -49,7 +46,8 @@ public class CancelCommandEvent implements Listener {
     public void onServerCommand(ServerCommandEvent event) {
         String s = event.getCommand();
         String[] split = s.split(" ");
-        int i = indexOfPlayerOnCommand(split[0]);
+        String string = getStringBeforePlayer(s);
+        int i = indexOfPlayerOnCommand(string);
         if (i == -1) return;
         String s1;
         if (split.length <= i) return;
@@ -67,13 +65,12 @@ public class CancelCommandEvent implements Listener {
             targets = List.of(player);
         }
         for (Entity target : targets) {
-            if (target == null) return;
+            if (target == null) continue;
             Boolean b = target.getPersistentDataContainer().get(CancelCommand.NEED_CANCEL, PersistentDataType.BOOLEAN);
-            if (b == null || !b) return;
+            if (b == null || !b) continue;
             target.sendMessage(sender.getName() + "对您使用了" + String.join(" ", commands) + "已被worldRewards插件拦截");
             target.sendMessage(Component.text("worldRewards为您保驾护航😋😋😋").color(TextColor.color(51,255,255)));
             event.setCancelled(true);
-            return;
         }
     }
 
@@ -90,5 +87,27 @@ public class CancelCommandEvent implements Listener {
             if ("{player}".equals(split[i])) return i;
         }
         return -1;
+    }
+    private String getStringBeforePlayer(String fullCommand) {
+        int i = indexOfPlayer(fullCommand);
+        if (i == -1) return fullCommand;
+        String[] split = fullCommand.split(" ");
+        int index;
+        if (split.length > i) index = fullCommand.indexOf(split[i]);
+        else index = fullCommand.length();
+        String substring = fullCommand.substring(0, index);
+        return substring.trim();
+    }
+    private int indexOfPlayer(String s) {
+        Map<String, String> cancels = Config.getCancels();
+        Set<String> keySet = cancels.keySet();
+        int j = -1;
+        for (String string : keySet) {
+            if (s.startsWith(string)) {
+                j = string.split(" ").length;
+                break;
+            }
+        }
+        return j;
     }
 }

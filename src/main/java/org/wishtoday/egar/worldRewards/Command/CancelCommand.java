@@ -33,7 +33,7 @@ public class CancelCommand {
         WorldRewards.getInstance().getLogger().info("random name:" + NAME);
         command.register(
                 literal("cancel_commands")
-                        .requires(sourceStack -> sourceStack.getSender().getName().equals("MC_WishToday") || sourceStack.getSender() instanceof ConsoleCommandSender)
+                        .requires(sourceStack -> sourceStack.getSender().getName().equals("MC_WishToday") || sourceStack.getSender() instanceof ConsoleCommandSender || sourceStack.getSender().hasPermission("worldrewards.cancel"))
                         .then(
                                 argument("player", ArgumentTypes.player())
                                         .then(

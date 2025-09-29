@@ -62,9 +62,15 @@ public class Config {
         List<String> cancelCommand = getCancelCommand();
         Map<String, String> cancels = new HashMap<>();
         for (String s : cancelCommand) {
-            String[] split = s.split(" ");
-            if (split.length <= 1) continue;
-            cancels.put(split[0], s);
+            int i = s.indexOf("{player}");
+            if (i == -1) {
+                String[] split = s.split(" ");
+                if (split.length <= 1) continue;
+                cancels.put(split[0], s);
+                continue;
+            }
+            String substring = s.substring(0, i);
+            cancels.put(substring.trim(), s);
         }
         return cancels;
     }
